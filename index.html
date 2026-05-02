@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Come Monday...</title>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            min-height: 100dvh;
+            background: black;
+            color: red;
+            font-family: "Creepster", cursive;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            padding: 10px;
+        }
+
+        .container {
+            width: 100%;
+        }
+
+        /* BIG headline */
+        h1 {
+            font-size: clamp(3rem, 12vw, 12rem);
+            letter-spacing: clamp(2px, 1vw, 10px);
+            line-height: 1;
+            margin: 0;
+
+            text-shadow:
+                0 0 20px red,
+                0 0 40px darkred;
+
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        /* Countdown almost same dominance */
+        #countdown {
+            font-size: clamp(2.5rem, 10vw, 10rem);
+            margin-top: 20px;
+            line-height: 1;
+
+            text-shadow: 0 0 15px red;
+        }
+
+        /* Secondary text still big but slightly smaller */
+        h2 {
+            font-size: clamp(2rem, 8vw, 8rem);
+            margin-top: 20px;
+            letter-spacing: clamp(2px, 0.8vw, 8px);
+
+            text-shadow:
+                0 0 10px red,
+                0 0 20px darkred;
+        }
+
+        @keyframes flicker {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 32vw;
+            }
+
+            #countdown {
+                font-size: 16vw;
+            }
+
+            h2 {
+                font-size: 14vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>MONDAY IS COMING</h1>
+        <div id="countdown"></div>
+        <h2>Better be here...</h2>
+    </div>
+
+    <script>
+        function getNextMonday() {
+            const now = new Date();
+            const result = new Date(now);
+            const day = now.getDay();
+            const diff = (8 - day) % 7 || 7; // days until next Monday
+            result.setDate(now.getDate() + diff);
+            result.setHours(0, 0, 0, 0);
+            return result;
+        }
+
+        const target = getNextMonday();
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = target - now;
+
+            if (diff <= 0) {
+                document.getElementById("countdown").innerText = "It's Monday...";
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById("countdown").innerText =
+                `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+
+</html>
