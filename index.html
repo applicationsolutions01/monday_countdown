@@ -3,93 +3,235 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Come Monday...</title>
+    <title>MONDAY HUNGER</title>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet" />
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             min-height: 100dvh;
-            background: black;
-            color: red;
+            background: radial-gradient(circle at center, #1a0000 0%, #000000 100%);
+            color: #ff1a1a;
             font-family: "Creepster", cursive;
-
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
 
-            padding: 10px;
+        /* eerie blur overlays */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0,0,0,0.6) 0px, rgba(0,0,0,0.6) 2px, transparent 2px, transparent 8px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(255,0,0,0.08) 0%, rgba(0,0,0,0.7) 90%);
+            pointer-events: none;
+            z-index: 1;
         }
 
         .container {
             width: 100%;
+            position: relative;
+            z-index: 2;
+            animation: tremor 8s infinite ease-in-out;
         }
 
-        /* BIG headline */
+        /* BIG headline — more aggressive */
         h1 {
             font-size: clamp(3rem, 12vw, 12rem);
-            letter-spacing: clamp(2px, 1vw, 10px);
+            letter-spacing: clamp(4px, 1.2vw, 12px);
             line-height: 1;
             margin: 0;
-
-            text-shadow:
-                0 0 20px red,
-                0 0 40px darkred;
-
-            animation: flicker 1.5s infinite alternate;
+            color: #ff0000;
+            text-shadow: 
+                0 0 8px #ff3300,
+                0 0 20px #cc0000,
+                0 0 35px #8b0000,
+                4px 4px 0px #2f0000;
+            animation: flickerBlast 0.8s infinite alternate, bleed 4s infinite alternate;
+            transform: rotate(-0.5deg);
         }
 
-        /* Countdown almost same dominance */
+        /* Countdown — menacing crimson pulse */
         #countdown {
-            font-size: clamp(2.5rem, 10vw, 10rem);
-            margin-top: 20px;
-            line-height: 1;
-
-            text-shadow: 0 0 15px red;
+            font-size: clamp(2.8rem, 11vw, 9rem);
+            margin-top: 30px;
+            line-height: 1.2;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff2a2a, #7a0000);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 18px #ff0000, 0 0 40px #500000;
+            letter-spacing: 6px;
+            animation: countdownPulse 1.2s infinite alternate, digitalGlitch 3s infinite;
         }
 
-        /* Secondary text still big but slightly smaller */
+        /* Secondary text — dread whisper */
         h2 {
-            font-size: clamp(2rem, 8vw, 8rem);
-            margin-top: 20px;
-            letter-spacing: clamp(2px, 0.8vw, 8px);
-
-            text-shadow:
-                0 0 10px red,
-                0 0 20px darkred;
+            font-size: clamp(2rem, 8vw, 7rem);
+            margin-top: 35px;
+            letter-spacing: clamp(3px, 1vw, 10px);
+            color: #b30000;
+            text-shadow: 
+                0 0 12px #ff4d4d,
+                0 0 25px #990000,
+                2px 2px 0px #2b0000;
+            animation: slowBurn 3s infinite alternate;
+            opacity: 0.92;
         }
 
-        @keyframes flicker {
+        /* aggressive flicker */
+        @keyframes flickerBlast {
             0% {
-                opacity: 1;
+                opacity: 0.95;
+                text-shadow: 0 0 6px red, 0 0 18px darkred, 0 0 30px #4a0000;
+                letter-spacing: 4px;
             }
-
-            50% {
-                opacity: 0.6;
+            30% {
+                opacity: 0.8;
+                text-shadow: 0 0 2px #ff6666, 0 0 12px #b30000;
             }
-
             100% {
                 opacity: 1;
+                text-shadow: 0 0 18px #ff4444, 0 0 38px #a30000, 0 0 70px #610000;
+                letter-spacing: 8px;
             }
         }
 
+        @keyframes bleed {
+            0% {
+                transform: rotate(-0.8deg) scale(1);
+            }
+            100% {
+                transform: rotate(0.8deg) scale(1.02);
+            }
+        }
+
+        @keyframes countdownPulse {
+            0% {
+                text-shadow: 0 0 5px #ff1a1a, 0 0 15px #990000;
+                opacity: 0.9;
+            }
+            100% {
+                text-shadow: 0 0 28px #ff4c4c, 0 0 55px #b30000, 0 0 80px #6b0000;
+                opacity: 1;
+            }
+        }
+
+        @keyframes digitalGlitch {
+            0% {
+                transform: translate(0);
+            }
+            20% {
+                transform: translate(-3px, 2px);
+            }
+            40% {
+                transform: translate(3px, -1px);
+            }
+            60% {
+                transform: translate(-1px, 1px);
+            }
+            80% {
+                transform: translate(2px, -2px);
+            }
+            100% {
+                transform: translate(0);
+            }
+        }
+
+        @keyframes slowBurn {
+            0% {
+                text-shadow: 0 0 6px #cc3333, 0 0 18px #5e0000;
+                opacity: 0.8;
+            }
+            100% {
+                text-shadow: 0 0 22px #ff4d4d, 0 0 44px #a10000, 0 0 66px #6b0101;
+                opacity: 1;
+            }
+        }
+
+        @keyframes tremor {
+            0% {
+                transform: translate(0px, 0px);
+            }
+            10% {
+                transform: translate(2px, -1px);
+            }
+            20% {
+                transform: translate(-2px, 1px);
+            }
+            30% {
+                transform: translate(1px, -2px);
+            }
+            40% {
+                transform: translate(-1px, 2px);
+            }
+            50% {
+                transform: translate(0px, 0px);
+            }
+            100% {
+                transform: translate(0px, 0px);
+            }
+        }
+
+        /* responsive tweaks */
         @media (max-width: 600px) {
             h1 {
                 font-size: 32vw;
+                letter-spacing: 2vw;
             }
-
             #countdown {
-                font-size: 16vw;
+                font-size: 18vw;
+                letter-spacing: 3px;
             }
-
             h2 {
                 font-size: 14vw;
             }
+            .container {
+                animation: tremor 5s infinite;
+            }
+        }
+
+        /* extra tiny floating threat particles */
+        .threat-dust {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: repeating-linear-gradient(45deg, rgba(200,0,0,0.02) 0px, rgba(200,0,0,0.02) 2px, transparent 2px, transparent 10px);
         }
     </style>
 </head>
 
 <body>
+    <div class="threat-dust"></div>
     <div class="container">
         <h1>MONDAY IS COMING</h1>
         <div id="countdown"></div>
@@ -101,21 +243,34 @@
             const now = new Date();
             const result = new Date(now);
             const day = now.getDay();
-            const diff = (8 - day) % 7 || 7; // days until next Monday
+            // days until next Monday (if today is Monday, get next week's Monday — more relentless)
+            let diff = (8 - day) % 7;
+            if (diff === 0) diff = 7;
             result.setDate(now.getDate() + diff);
             result.setHours(0, 0, 0, 0);
             return result;
         }
 
-        const target = getNextMonday();
+        let target = getNextMonday();
 
+        // aggressive countdown with optional "OVERDUE" terror but only same wording structure
         function updateCountdown() {
             const now = new Date();
-            const diff = target - now;
+            let diff = target - now;
 
+            // if passed monday, instantly jump to next monday to keep the threat eternal
             if (diff <= 0) {
-                document.getElementById("countdown").innerText = "It's Monday...";
-                return;
+                // recalculate next incoming monday
+                target = getNextMonday();
+                diff = target - now;
+                // but if somehow still negative after reset (rare) just force refresh
+                if (diff <= 0) {
+                    const temp = new Date();
+                    temp.setDate(temp.getDate() + 7);
+                    temp.setHours(0,0,0,0);
+                    target = temp;
+                    diff = target - now;
+                }
             }
 
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -123,12 +278,37 @@
             const minutes = Math.floor((diff / (1000 * 60)) % 60);
             const seconds = Math.floor((diff / 1000) % 60);
 
-            document.getElementById("countdown").innerText =
-                `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            // add menacing formatting: no extra text, just digits and symbols but with brutal feel
+            let countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            
+            // inject some subtle double-zero threat effect if less than 1 hour left
+            const elem = document.getElementById("countdown");
+            if (days === 0 && hours === 0 && minutes < 5 && minutes >= 0) {
+                // intensify glitching
+                elem.style.animation = "countdownPulse 0.3s infinite alternate, digitalGlitch 0.2s infinite";
+                elem.style.textShadow = "0 0 45px #ff0000, 0 0 90px #a10000";
+            } else {
+                elem.style.animation = "countdownPulse 1.2s infinite alternate, digitalGlitch 3s infinite";
+                elem.style.textShadow = "";
+            }
+            
+            document.getElementById("countdown").innerText = countdownText;
         }
 
+        // double refresh: also re-check monday crossing at each second edge
         setInterval(updateCountdown, 1000);
         updateCountdown();
+
+        // bonus: add random tiny flicker to body background for extra dread
+        setInterval(() => {
+            const body = document.body;
+            if (Math.random() > 0.85) {
+                body.style.backgroundColor = "#0a0000";
+                setTimeout(() => {
+                    body.style.backgroundColor = "";
+                }, 80);
+            }
+        }, 1200);
     </script>
 </body>
 
